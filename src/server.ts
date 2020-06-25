@@ -10,4 +10,6 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Start server
-app.listen(port, () => console.log(`Server is listening on port ${port}!`));
+app.listen(port, () =>
+  console.log(`User auth microservice listening on port: ${port}!`)
+);
