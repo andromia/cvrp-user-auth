@@ -17,7 +17,7 @@ mongoose.connection.on("error", (err) => {
   console.log("User auth IS NOT connected to Mongo!");
 });
 
-let mongoURI = "mongodb://mongo:27017/api/user";
+let mongoURI = "mongodb://mongo:27017/user";
 mongoose.connect(mongoURI, options);
 
 // Boot express
