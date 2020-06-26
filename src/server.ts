@@ -14,9 +14,16 @@ const options = {
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
 };
 
-mongoose.connect("mongodb://localhost:27017", options).catch((error) => {
-  console.log(error);
+mongoose.connection.on("open", function (ref) {
+  console.log("Connected to mongo server.");
 });
+
+mongoose.connection.on("error", function (err) {
+  console.log("Could not connect to mongo server!");
+});
+
+let mongoURI = "mongodb://localhost:27017/auth";
+mongoose.connect(mongoURI);
 
 // Boot express
 const app: Application = express();
