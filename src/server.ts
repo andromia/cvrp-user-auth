@@ -23,7 +23,7 @@ mongoose.connection.on("error", function (err) {
 });
 
 let mongoURI = "mongodb://localhost:27017/auth";
-mongoose.connect(mongoURI);
+mongoose.connect(mongoURI, options);
 
 // Boot express
 const app: Application = express();
