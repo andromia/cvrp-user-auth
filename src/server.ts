@@ -22,7 +22,7 @@ mongoose.connection.on("error", function (err) {
   console.log("Could not connect to mongo server!");
 });
 
-let mongoURI = "mongodb://localhost:27017/auth";
+let mongoURI = "mongodb://mongo:27017/auth";
 mongoose.connect(mongoURI, options);
 
 // Boot express
