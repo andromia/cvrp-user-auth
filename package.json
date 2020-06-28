@@ -1,8 +1,8 @@
 {
-  "name": "cvrp-user-auth",
+  "name": "mds-cvrp-auth",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:andromia/cvrp-user-auth.git",
+  "repository": "git@github.com:andromia/mds-cvrp-auth.git",
   "author": "Phillip Rognerud <philliprognerud2@yahoo.com>",
   "license": "MIT",
   "scripts": {
