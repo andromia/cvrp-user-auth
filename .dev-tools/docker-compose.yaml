@@ -1,0 +1,29 @@
+version: "3"
+networks:
+    isolation-network:
+        driver: bridge
+
+services:
+    user_auth_dev:
+        image: user_auth_dev:1.00
+        container_name: user_auth_dev
+        restart: unless-stopped
+        command: yarn dev
+        build:
+            context: ../
+            dockerfile: .dev-tools/Dockerfile
+        ports:
+            - "8080:8080"
+        depends_on:
+            - mongo
+        networks:
+            - isolation-network
+        volumes:
+            - ..:/usr/src/app/
+    mongo:
+        image: mongo
+        restart: unless-stopped
+        ports:
+            - "27017:27017"
+        networks:
+            - isolation-network
