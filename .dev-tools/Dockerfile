@@ -17,6 +17,7 @@ RUN yarn install
 
 # Copy project files
 COPY . .
+RUN rm -rf dist/
 
 # Set and expose port
 ENV PORT 8080

@@ -3,9 +3,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import passport from "passport";
 import config from "config";
 import mongoose from "mongoose";
+import passport from "passport";
 
 import authenticator from "./passport/index";
 import routes from "./routes/index";
@@ -14,25 +14,25 @@ const PORT = 8080;
 const COOKIE_EXPIRY = 60 * 60 * 1000 * 2; // 2 days
 
 // Setup Mongoose connection
-// const options = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-//   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-// };
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+    socketTimeoutMS: 45000 // Close sockets after 45 seconds of inactivity
+};
 
-// mongoose.connection.on("open", (ref) => {
-//   console.log("User auth connected to Mongo!");
-// });
+mongoose.connection.on("open", ref => {
+    console.log("User auth connected to Mongo!");
+});
 
-// mongoose.connection.on("error", (err) => {
-//   console.log("User auth IS NOT connected to Mongo!");
-// });
+mongoose.connection.on("error", err => {
+    console.log("User auth IS NOT connected to Mongo!");
+});
 
-// let mongoURI = "mongodb://mongo:27017/user";
-// mongoose.connect(mongoURI, options);
+let mongoURI = "mongodb://mongo:27017/user";
+mongoose.connect(mongoURI, options);
 
-const serverStart = (app: Application) => {
+const serverStart = (app: Application, passport: any) => {
     // App configuration
     app.use(cors());
     app.use(cookieParser(config.get("COOKIE_SECRET")));
@@ -51,10 +51,11 @@ const serverStart = (app: Application) => {
     app.use(passport.session());
 
     // Initialize Passport
-    // authenticator(app, passport);
+    authenticator(app, passport);
 
     // Initialize Routes
     routes(app);
+
     // app.use("/auth/login", (req: Request, res: Response, next: NextFunction) => {
     //     console.log(req.body);
     //     res.status(200).send({ data: "user auth" });
@@ -64,4 +65,4 @@ const serverStart = (app: Application) => {
     app.listen(PORT, () => console.log("Listening on port " + PORT));
 };
 
-serverStart(express());
+serverStart(express(), passport);
