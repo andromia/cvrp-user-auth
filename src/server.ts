@@ -44,7 +44,7 @@ const serverStart = (app: Application, passport: any) => {
         session({
             rolling: true,
             resave: false,
-            saveUninitialized: false,
+            saveUninitialized: true,
             secret: config.get("COOKIE_SECRET"),
             cookie: { maxAge: COOKIE_EXPIRY, secure: false },
             store: new redisStore({ host: "localhost", port: 6379, client: client, ttl: 260 })
