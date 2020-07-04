@@ -1,5 +1,4 @@
 import express, { Application } from "express";
-import passport from "passport";
 
 // Local Imports
 import UserAccount from "models/UserAccount";
@@ -8,7 +7,7 @@ import UserAccount from "models/UserAccount";
 const router = express.Router();
 
 // Initialize
-function register(passport: any, UserAccount: any) {
+function register(UserAccount: any) {
     router.post("/", (req, res) => {
         const { email, username, password } = req.body;
 
@@ -16,18 +15,16 @@ function register(passport: any, UserAccount: any) {
             return res.status(400).send({ message: "Missing input data." });
         }
 
-        UserAccount.register(new UserAccount({ username, email }), password, (err: any, account) => {
-            if (err) {
-                return res.status(400).send({ error: err.message });
-            }
+        const newUser = new UserAccount({ email, username, password });
 
-            passport.authenticate("local")(req, res, () => {
-                req.session.save((err: any) => {
-                    if (err) {
-                        return res.status(400).send({ error: err.message });
-                    }
-                    res.redirect("/dashboard");
-                });
+        UserAccount.findOne({ email }, (err, userDoc) => {
+            if (err) return res.status(400).send({ message: err });
+            if (userDoc) return res.status(400).send({ message: "Email already taken." });
+
+            newUser.save((err, newUserDoc) => {
+                if (err) return res.status(400).send({ message: err });
+
+                res.redirect("/login");
             });
         });
     });
@@ -35,4 +32,4 @@ function register(passport: any, UserAccount: any) {
     return { path: "/register", router };
 }
 
-export default register(passport, UserAccount);
+export default register(UserAccount);

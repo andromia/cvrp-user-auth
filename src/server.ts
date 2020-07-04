@@ -6,9 +6,13 @@ import session from "express-session";
 import config from "config";
 import mongoose from "mongoose";
 import passport from "passport";
+import redis from "redis";
+const redisStore = require("connect-redis")(session);
 
-import authenticator from "./passport/index";
 import routes from "./routes/index";
+import strategy from "./passport/index";
+
+const client = redis.createClient({ host: "redis", port: "6379" });
 
 const PORT = 8080;
 const COOKIE_EXPIRY = 60 * 60 * 1000 * 2; // 2 days
@@ -16,9 +20,7 @@ const COOKIE_EXPIRY = 60 * 60 * 1000 * 2; // 2 days
 // Setup Mongoose connection
 const options = {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-    socketTimeoutMS: 45000 // Close sockets after 45 seconds of inactivity
+    useUnifiedTopology: true
 };
 
 mongoose.connection.on("open", ref => {
@@ -41,25 +43,20 @@ const serverStart = (app: Application, passport: any) => {
     app.use(
         session({
             rolling: true,
-            resave: true,
+            resave: false,
             saveUninitialized: false,
             secret: config.get("COOKIE_SECRET"),
-            cookie: { maxAge: COOKIE_EXPIRY, secure: false }
+            cookie: { maxAge: COOKIE_EXPIRY, secure: false },
+            store: new redisStore({ host: "localhost", port: 6379, client: client, ttl: 260 })
         })
     );
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // Initialize Passport
-    authenticator(app, passport);
+    strategy(app, passport);
 
     // Initialize Routes
     routes(app);
-
-    // app.use("/auth/login", (req: Request, res: Response, next: NextFunction) => {
-    //     console.log(req.body);
-    //     res.status(200).send({ data: "user auth" });
-    // });
 
     // Start server
     app.listen(PORT, () => console.log("Listening on port " + PORT));

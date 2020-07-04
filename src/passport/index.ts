@@ -13,14 +13,23 @@ export default (app: Application, passport: any) => {
         done(null, user);
     });
 
-    const registerStrategy = new LocalStrategy(function (username, password, done) {
-        UserAccount.findOne(username, function (err, user: any) {
-            if (err) return done(err);
-            if (!user) return done(null, false);
-            if (!user.verifyPassword(password)) return done(null, false);
-            return done(null, user);
-        });
-    });
+    const registerStrategy = new LocalStrategy(
+        {
+            passReqToCallback: true
+        },
+        function (req, username, password, done) {
+            UserAccount.findOne({ username }, function (err, user: any) {
+                if (err) return done(err);
+                if (!user) return done(null, false);
+
+                user.comparePassword(password, (err, isMatch) => {
+                    if (err || !isMatch) return done(null, false);
+
+                    return done(null, user);
+                });
+            });
+        }
+    );
 
     passport.use(registerStrategy);
 };

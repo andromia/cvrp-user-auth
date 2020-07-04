@@ -16,6 +16,7 @@ services:
             - "8080:8080"
         depends_on:
             - mongo
+            - redis
         networks:
             - isolation-network
         volumes:
@@ -25,5 +26,14 @@ services:
         restart: unless-stopped
         ports:
             - "27017:27017"
+        networks:
+            - isolation-network
+
+    redis:
+        image: redis
+        restart: unless-stopped
+        command: redis-server
+        ports:
+            - "6379:6379"
         networks:
             - isolation-network

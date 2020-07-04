@@ -9,7 +9,6 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # Copy dependencies & config files
 COPY package.json .
-COPY yarn.lock .
 
 # Install app dependencies
 RUN yarn global add typescript
