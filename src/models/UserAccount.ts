@@ -14,7 +14,10 @@ const UserAccount = new Schema(
     {
         email: { type: String, minlength: 8, maxlength: 32, required: true, lowercase: true, trim: true, index: { unique: true } },
         username: { type: String, minlength: 8, maxlength: 32, required: true },
-        password: { type: String, required: true }
+        password: { type: String },
+        createdBy: { type: String, enum: ["local", "github", "google"], required: true },
+        githubId: String,
+        dateCreated: { type: Date, default: Date.now }
     },
     { collection: "UserAccounts" }
 );

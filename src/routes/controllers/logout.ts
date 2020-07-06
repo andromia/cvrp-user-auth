@@ -13,7 +13,7 @@ function logout(passport: any) {
             req.session.destroy();
             // @ts-ignore
             req.logout();
-            res.redirect("/");
+            return res.redirect("/");
         }
     });
 

@@ -7,11 +7,11 @@ import config from "config";
 import mongoose from "mongoose";
 import passport from "passport";
 import redis from "redis";
-const redisStore = require("connect-redis")(session);
 
 import routes from "./routes/index";
 import strategy from "./passport/index";
 
+const redisStore = require("connect-redis")(session);
 const client = redis.createClient({ host: "redis", port: "6379" });
 
 const PORT = 8080;
@@ -20,7 +20,9 @@ const COOKIE_EXPIRY = 60 * 60 * 1000 * 2; // 2 days
 // Setup Mongoose connection
 const options = {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 };
 
 mongoose.connection.on("open", ref => {
@@ -43,8 +45,8 @@ const serverStart = (app: Application, passport: any) => {
     app.use(
         session({
             rolling: true,
-            resave: false,
-            saveUninitialized: true,
+            resave: true,
+            saveUninitialized: false,
             secret: config.get("COOKIE_SECRET"),
             cookie: { maxAge: COOKIE_EXPIRY, secure: false },
             store: new redisStore({ host: "localhost", port: 6379, client: client, ttl: 260 })
