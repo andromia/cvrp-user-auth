@@ -1,2 +1,2 @@
-# mds-cvrp-auth
+# solverstack-cvrp-auth
 Microservice for user authentication into cvrp-client
