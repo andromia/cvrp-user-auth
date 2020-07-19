@@ -1,8 +1,8 @@
 {
     "BASE_PATH": "/auth",
     "COOKIE_SECRET": "GNhVj43CqLV7wG0ktAhZlg+4DQAlB8Xs",
-    "GITHUB_CLIENT_ID": "eb50e552033cd5225049",
-    "GITHUB_CLIENT_SECRET": "3447357ebc3a00697829f88f2c33bc96c4255c73",
-    "GOOGLE_CLIENT_ID": "1018822714648-rgdjrjgvb6uipe236khkp859rmcmluco.apps.googleusercontent.com",
-    "GOOGLE_CLIENT_SECRET": "JoXX95mDwhi3s3o22Y_E8yXk"
+    "GITHUB_CLIENT_ID": "",
+    "GITHUB_CLIENT_SECRET": "",
+    "GOOGLE_CLIENT_ID": "",
+    "GOOGLE_CLIENT_SECRET": ""
 }
