@@ -3,6 +3,7 @@ import config from "config";
 
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // Local Imports
 import UserAccount from "models/UserAccount";
@@ -61,6 +62,19 @@ export default (app: Application, passport: any) => {
         }
     );
 
+    const googleStrategy = new GoogleStrategy({
+        clientID: config.get("GOOGLE_CLIENT_ID"),
+        clientSecret: config.get("GOOGLE_CLIENT_SECRET"),
+        callbackURL: "http://localhost:8080/auth/google/callback"
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        UserAccount.findOne({ googleId: profile.id }, function (err, user) { // was findOrCreate
+            return cb(err, user);
+            });
+        }
+    );
+
     passport.use(registerStrategy);
     passport.use(gitHubStrategy);
+    passport.use(googleStrategy);
 };
