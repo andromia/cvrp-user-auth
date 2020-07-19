@@ -1,7 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-
 # if on windows host without admin rights, warn & exit
 if Vagrant::Util::Platform.windows? then
   def running_in_admin_mode?
@@ -43,5 +42,4 @@ Vagrant.configure(2) do |config|
       sudo apt-get -y update && sudo apt-get -y install yarn
       yarn install
     SHELL
-
-    end
+end
