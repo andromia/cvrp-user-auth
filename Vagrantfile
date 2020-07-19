@@ -33,8 +33,6 @@ Vagrant.configure(2) do |config|
 
     config.vm.network :forwarded_port, guest: 8080, host: 8080
   
-    config.ssh.forward_agent = true
-  
     config.vm.provision "shell", inline: <<-SHELL
       apt-get update -y
       apt-get upgrade -y
