@@ -20,7 +20,7 @@ def client():
 
 
 def test_login(client):
-    input_data = []
+    input_data = {"username": "user1", "password": "abcxyz"}
     logging.debug(f"input data : {input_data}")
 
     endpoint = f"/api/{__version__}/login"
@@ -29,3 +29,4 @@ def test_login(client):
     response = client.post(endpoint, json=input_data)
     output = json.loads(response.get_data())
 
+    assert output

@@ -14,7 +14,7 @@ def login():
     TODO    
     """
     body = loads(request.data)
-    
-    response = None
-    
-    return jsonify(response)
+
+    user = auth.authenticate(body["username"], body["password"])
+
+    return jsonify(user.__str__())
