@@ -1,2 +1,4 @@
-# solverstack-vrp-auth
-Microservice for user authentication into cvrp-client
+![user](https://github.com/andromia/solverstack-user/workflows/user/badge.svg)
+
+# solverstack-user
+Service for handling solverstack user auth.

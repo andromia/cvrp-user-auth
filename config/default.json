@@ -1,8 +1,0 @@
-{
-    "BASE_PATH": "/auth",
-    "COOKIE_SECRET": "GNhVj43CqLV7wG0ktAhZlg+4DQAlB8Xs",
-    "GITHUB_CLIENT_ID": "",
-    "GITHUB_CLIENT_SECRET": "",
-    "GOOGLE_CLIENT_ID": "",
-    "GOOGLE_CLIENT_SECRET": ""
-}

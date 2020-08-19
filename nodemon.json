@@ -1,6 +1,0 @@
-{
-    "ignore": ["node_modules"],
-    "watch": ["src", "yarn.lock", "dist"],
-    "exec": "tsc && babel-node dist/server.js",
-    "ext": "ts"
-}

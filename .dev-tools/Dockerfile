@@ -1,23 +1,22 @@
-FROM node:14-alpine3.10
+FROM python:3.8-slim
 
-# Set working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+COPY requirements*.txt /app/
 
-# Set node in path
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+WORKDIR /app
 
-# Copy dependencies & config files
-COPY package.json .
+RUN python -m pip install -r requirements.txt
 
-# Install app dependencies
-RUN yarn global add typescript
-RUN yarn install
+RUN python -m pip install -r requirements-dev.txt
 
-# Copy project files
-COPY . .
-RUN rm -rf dist/
+COPY . /app
+
+ENTRYPOINT [ "python" ]
+
+# flask dev (remove for prod)
+ENV FLASK_APP app
+ENV FLASK_ENV development
+ENV DEBUG 1
 
 # Set and expose port
-ENV PORT 8080
-EXPOSE 8080
+ENV PORT 5003
+EXPOSE 5003
