@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tetsting",
+            "name": "tests",
             "type": "python",
             "request": "launch",
             "console": "integratedTerminal",
