@@ -18,5 +18,5 @@ ENV FLASK_ENV development
 ENV DEBUG 1
 
 # Set and expose port
-ENV PORT 8080
-EXPOSE 8080
+ENV PORT 5005
+EXPOSE 5005
