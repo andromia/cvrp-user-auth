@@ -34,6 +34,7 @@ def test_login(client):
 
     assert output
 
+
 def test_register(client):
     # TODO: figure out isolated testing for cross-service features
     return
