@@ -4,15 +4,13 @@ from logging.handlers import RotatingFileHandler, SMTPHandler
 
 from flask import Flask, current_app, request
 from flask_cors import CORS
-from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
 
 from config import Config
 
-from app.auth import authenticate, identity
-
 __version__ = "v0.1"
 
-jwt = JWT(authentication_handler=authenticate, identity_handler=identity)
+jwt = JWTManager()
 
 
 def create_app(config_class=Config):
