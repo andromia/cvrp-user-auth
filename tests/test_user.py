@@ -23,16 +23,15 @@ def test_login(client):
     # TODO: figure out isolated testing for cross-service features
     return
 
-    input_data = {"username": "test", "password": "password"}
+    input_data = {"username": "test1", "password": "password"}
     logging.debug(f"input data : {input_data}")
 
     endpoint = f"/api/{__version__}/login"
     logging.debug(f"endpoint: {endpoint}")
 
-    response = client.post(endpoint, json=input_data)
-    output = json.loads(response.get_data())
+    token = client.post(endpoint, json=input_data).data
 
-    assert output
+    assert token
 
 
 def test_register(client):

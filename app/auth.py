@@ -20,7 +20,7 @@ def authenticate(username, password):
     if response.status_code != 200:
         return None
 
-    user = loads(response.text)
+    user = loads(response.text)["user"]
     if check_password_hash(user["password_hash"], password):
         return create_token(user)
 

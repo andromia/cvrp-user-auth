@@ -38,7 +38,7 @@ def register():
     if response.status_code == 200:
         return make_response("username exists", 400)
 
-    user = loads(requests.post(BASE_URL, json={"user": body}).text)
+    user = loads(requests.post(BASE_URL, json={"user": body}).text)["user"]
     token = auth.create_token(user)
 
     return make_response(token, 200)
