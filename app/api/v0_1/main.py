@@ -19,9 +19,10 @@ def login():
     """
     body = loads(request.data)
 
-    response = requests.get(f"{BASE_URL}/{body['username']}")
+    if not auth.authenticate(body["username"], body["password"]):
+        return "failed to authenticate"
 
-    return jsonify(response.__str__())
+    return auth.create_token()
 
 
 @bp.route("/register", methods=["POST"])
@@ -37,4 +38,4 @@ def register():
 
     response = requests.post(BASE_URL, json={"user": body})
 
-    return jsonify(response.__str__())
+    return auth.create_token()
