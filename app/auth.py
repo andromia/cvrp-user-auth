@@ -1,7 +1,8 @@
 from flask import Flask
 from werkzeug.security import safe_str_cmp, check_password_hash
-import requests
 from flask_jwt_extended import create_access_token
+from json import loads
+import requests
 
 
 BASE_URL = "http://localhost:5006/api/v0.1/user"
@@ -16,10 +17,11 @@ def create_token(user: dict):
 def authenticate(username, password):
     response = requests.get(f"{BASE_URL}/{username}")
 
-    if not response:
+    if response.status_code != 200:
         return None
 
-    if check_password_hash(response.password_hash, password):
-        return response
+    user = loads(response.text)
+    if check_password_hash(user["password_hash"], password):
+        return create_token(user)
 
     return None

@@ -45,7 +45,6 @@ def test_register(client):
     endpoint = f"/api/{__version__}/register"
     logging.debug(f"endpoint: {endpoint}")
 
-    response = client.post(endpoint, json=input_data)
-    output = json.loads(response.get_data())
+    token = client.post(endpoint, json=input_data).data
 
-    assert output
+    assert token

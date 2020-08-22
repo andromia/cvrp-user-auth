@@ -19,12 +19,12 @@ def login():
     """
     body = loads(request.data)
 
-    user = auth.authenticate(body["username"], body["password"])
+    token = auth.authenticate(body["username"], body["password"])
 
-    if not user:
-        return "failed to authenticate"
+    if not token:
+        return make_response("failed to authenticate", 400)
 
-    return auth.create_token(user)
+    return make_response(token, 200)
 
 
 @bp.route("/register", methods=["POST"])
@@ -35,9 +35,10 @@ def register():
     body = loads(request.data)
 
     response = requests.get(f"{BASE_URL}/{body['username']}")
-    if response:
-        return "username exists"
+    if response.status_code == 200:
+        return make_response("username exists", 400)
 
-    user = requests.post(BASE_URL, json={"user": body})
+    user = loads(requests.post(BASE_URL, json={"user": body}).text)
+    token = auth.create_token(user)
 
-    return auth.create_token(user)
+    return make_response(token, 200)
