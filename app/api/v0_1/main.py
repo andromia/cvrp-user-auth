@@ -10,7 +10,7 @@ from . import bp
 
 # TODO: for docker containers
 # BASE_URL = "http://flask_crud_dev:5006/api/v0.1/user"
-BASE_URL = "http://localhost:5006/api/v0.1/user"
+BASE_URL = "http://localhost:5004/api/v0.1/user"
 
 
 @bp.route("/login", methods=["POST"])
