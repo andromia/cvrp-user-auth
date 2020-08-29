@@ -25,7 +25,12 @@ def login():
     if not token:
         return make_response("failed to authenticate", 400)
 
-    return make_response(token, 200)
+    response = {
+        "token": token,
+        "username": body["username"]
+    }
+
+    return make_response(jsonify(response), 200)
 
 
 @bp.route("/register", methods=["POST"])
@@ -42,4 +47,9 @@ def register():
     user = loads(requests.post(BASE_URL, json={"user": body}).text)["user"]
     token = auth.create_token(user)
 
-    return make_response(token, 200)
+    response = {
+        "token": token,
+        "username": user["username"]
+    }
+    
+    return make_response(jsonify(response), 200)
